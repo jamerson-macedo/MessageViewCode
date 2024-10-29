@@ -65,6 +65,7 @@ class NavView: UIView {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(systemName:"magnifyingglass"), for: .normal)
+        btn.tintColor = .black
         return btn
     }()
     let stackView: UIStackView = {
@@ -127,7 +128,7 @@ extension NavView : ViewCode{
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // background da view
+            // background da view é tudo
             self.navBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.navBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),

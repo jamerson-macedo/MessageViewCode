@@ -19,6 +19,7 @@ class HomeScreen: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsHorizontalScrollIndicator = false
         view.backgroundColor = .clear
+        view.register(MessageLastCollectionViewCell.self, forCellWithReuseIdentifier: MessageLastCollectionViewCell.identifier)
         view.delaysContentTouches = false // remove delay na tela
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
         layout.scrollDirection = .vertical
