@@ -48,7 +48,7 @@ extension RegisterVC : RegisterScreenProtocol{
         self.auth?.createUser(withEmail:register.getEmail() , password: register.getPassWord(), completion: { result, error in
             if error != nil {
                 self.alert?.getAlert(title: "Erro ao cadastrar", message: "Tente cadastrar novamente")
-                print(error)
+            
             }else {
                 if let idUsuario = result?.user.uid {
                     self.firestore?.collection("users").document(idUsuario).setData([
@@ -61,10 +61,13 @@ extension RegisterVC : RegisterScreenProtocol{
                 
                 
                 self.alert?.getAlert(title: "Sucesso ao cadastrar", message: " sucesso",completion: {
-                    self.navigationController?.popViewController(animated: true)
+                    let vc = HomeVC()
+                    let navVc = UINavigationController(rootViewController: vc)
+                    navVc.modalPresentationStyle = .fullScreen
+                    self.present(navVc, animated: true)
                 })
 
-                self.navigationController?.popViewController(animated: true)
+                
 
                 print("Sucesso")
             }

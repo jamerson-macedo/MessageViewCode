@@ -21,7 +21,7 @@ class NavView: UIView {
         self.delegate = delegate
     }
     
-    lazy var navBackground: UIView = {
+    lazy var navBackgroundView: UIView = {
        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -47,6 +47,7 @@ class NavView: UIView {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.clipsToBounds = true
         searchBar.backgroundColor = CustomColor.appLight
+        searchBar.layer.cornerRadius = 20
         return searchBar
     }()
     
@@ -86,7 +87,7 @@ class NavView: UIView {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(systemName:"person.3")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        btn.tintColor = .systemPink
+        btn.tintColor = .black
         btn.addTarget(self, action: #selector(tappedContactButton), for: .touchUpInside)
         return btn
     }()
@@ -114,17 +115,46 @@ class NavView: UIView {
 }
 extension NavView : ViewCode{
     func addSubviews() {
-      
+        self.addSubview(self.navBackgroundView)
+        self.navBackgroundView.addSubview(self.navBar)
+        self.navBar.addSubview(self.searchBar)
+        self.navBar.addSubview(self.stackView)
+        self.stackView.addArrangedSubview(self.conversationBtn)
+        self.stackView.addArrangedSubview(self.contactBtn)
+        self.searchBar.addSubview(self.searchLabel)
+        self.searchBar.addSubview(self.searchBtn)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             // background da view
-            self.navBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.navBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.navBackground.topAnchor.constraint(equalTo: self.topAnchor),
-            self.navBackground.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.navBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.navBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            // navbar
+            self.navBar.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            self.navBar.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navBar.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.navBar.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
+            self.searchBar.leadingAnchor.constraint(equalTo: self.navBar.leadingAnchor,constant: 30),
+            self.searchBar.centerYAnchor.constraint(equalTo: self.navBar.centerYAnchor),
+            self.searchBar.trailingAnchor.constraint(equalTo: self.stackView.leadingAnchor,constant: -20),
+            self.searchBar.heightAnchor.constraint(equalToConstant: 40),
+            
+            self.stackView.trailingAnchor.constraint(equalTo: self.navBar.trailingAnchor,constant: -30),
+            self.stackView.centerYAnchor.constraint(equalTo: self.navBar.centerYAnchor),
+            self.stackView.heightAnchor.constraint(equalToConstant: 30),
+            self.stackView.widthAnchor.constraint(equalToConstant: 100),
+            
+            self.searchLabel.leadingAnchor.constraint(equalTo: self.searchBar.leadingAnchor,constant: 25),
+            self.searchLabel.centerYAnchor.constraint(equalTo: self.searchBar.centerYAnchor),
+            
+            self.searchBtn.trailingAnchor.constraint(equalTo: self.searchBar.trailingAnchor, constant: -20),
+            self.searchBtn.centerYAnchor.constraint(equalTo: self.searchBar.centerYAnchor),
+            self.searchBtn.widthAnchor.constraint(equalToConstant: 20),
+            self.searchBtn.heightAnchor.constraint(equalToConstant: 20),
         ])
     }
     

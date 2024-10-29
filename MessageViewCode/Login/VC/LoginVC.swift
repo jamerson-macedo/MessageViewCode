@@ -37,14 +37,15 @@ extension LoginVC:LoginScreenProtocol{
             if error != nil{
                 self.alert?.getAlert(title: "Erro Firebase", message: "Dados incorretos")
             }else {
-                self.alert?.getAlert(title: "Usuario Logado", message: "Parabéns")
-
-                print("Login Realizado")
+                self.alert?.getAlert(title: "Usuario Logado", message: "Parabéns",completion: {
+                    let vc = HomeVC()
+                    let navVc = UINavigationController(rootViewController: vc)
+                    navVc.modalPresentationStyle = .fullScreen
+                    self.present(navVc, animated: true)
+                })
             }
         })
         
-       // let vc = HomeVC()
-        //self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func actionRegisterButton() {

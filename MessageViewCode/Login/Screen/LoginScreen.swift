@@ -28,6 +28,7 @@ class LoginScreen: UIView {
         textField.autocorrectionType = .no
         textField.keyboardType = .emailAddress
         textField.backgroundColor = .white
+        textField.text = "go@gmail.com"
         textField.borderStyle = .roundedRect
     
         return textField
@@ -41,7 +42,7 @@ class LoginScreen: UIView {
         passwordTextField.backgroundColor = .white
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.isSecureTextEntry = true
-    
+        passwordTextField.text = "123123123"
         return passwordTextField
     }()
     
