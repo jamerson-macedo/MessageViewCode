@@ -20,6 +20,7 @@ class HomeScreen: UIView {
         view.showsHorizontalScrollIndicator = false
         view.backgroundColor = .clear
         view.register(MessageLastCollectionViewCell.self, forCellWithReuseIdentifier: MessageLastCollectionViewCell.identifier)
+        view.register(MessageDetailCollectionViewCell.self, forCellWithReuseIdentifier: MessageDetailCollectionViewCell.identifier)
         view.delaysContentTouches = false // remove delay na tela
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
         layout.scrollDirection = .vertical
