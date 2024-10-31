@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 class HomeVC: UIViewController {
-
+    
     var homescreen: HomeScreen?
     var auth : Auth?
     var db : Firestore?
@@ -27,12 +27,13 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = CustomColor.appLight
-       
+        
         self.configHomeView()
         self.configCollectionView()
         self.configAlert()
         self.configIdentifierFirebase()
         self.addListenerRecoveryConversation()
+        self.configContact()
         
     }
     override func loadView() {
@@ -97,7 +98,7 @@ class HomeVC: UIViewController {
     
     
     
-
+    
 }
 extension HomeVC: NavViewProtocol{
     func typeScreenMessage(_ type: TypeConversationOrContact) {
@@ -105,6 +106,7 @@ extension HomeVC: NavViewProtocol{
         case .contact:
             self.screenContact = true
             self.getContact()
+            self.conversasListenner?.remove()
         case .conversation:
             self.screenContact = false
             self.addListenerRecoveryConversation()
@@ -116,14 +118,47 @@ extension HomeVC: NavViewProtocol{
 }
 extension HomeVC : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        if self.screenContact ?? false {
+            return self.contactList.count + 1 // ultima celula para adicionar o contato
+        }else {
+            return self.conversationLIst.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        if self.screenContact ?? false {
+            if indexPath.row == self.contactList.count { // verifica se é o ultimo elemento que no caso é o add contact
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MessageLastCollectionViewCell.identifier, for: indexPath)
+                return cell
+                
+            }
+            else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MessageDetailCollectionViewCell.identifier, for: indexPath) as? MessageDetailCollectionViewCell
+                cell?.setupViewContact(contact: self.contactList[indexPath.row])
+                return cell ?? UICollectionViewCell()
+                
+            }
+        }else {
+            // tela de conversas
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MessageDetailCollectionViewCell.identifier, for: indexPath) as? MessageDetailCollectionViewCell
+            cell?.setupViewConversation(conversation: self.conversationLIst[indexPath.row])
+            return cell ?? UICollectionViewCell()
+        }
     }
+    // verifica o item selecionado
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        if self.screenContact ?? false {
+            if indexPath.row == self.contactList.count {
+                self.alert?.addContact(completion: { value in
+                    self.contato?.addContact(email: value, emailUsuarioLogado: self.emailLogedDoUser ?? "", idUsuario: self.idUsuarioLogado ?? "")
+                })
+            }else {
+                
+            }
+        }else {
+            
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 100)

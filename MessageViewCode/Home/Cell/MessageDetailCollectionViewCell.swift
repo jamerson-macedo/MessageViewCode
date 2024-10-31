@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// MARK: Celula de lista de contatos e ultima mensagem
 class MessageDetailCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "MessageDetailCollectionViewCell"
@@ -16,7 +16,7 @@ class MessageDetailCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 26
-        imageView.image = UIImage(named: "person")
+        imageView.image = UIImage(systemName: "person")
         return imageView
     }()
     lazy var userName : UILabel = {

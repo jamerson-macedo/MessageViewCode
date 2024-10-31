@@ -18,26 +18,31 @@ class ContactController {
     public func delegate(delegate : ContatoProtocol?){
         self.delegate = delegate
     }
-    func addContact(email : String,emailUserLoged : String,idUsuario:String) {
-        if email == emailUserLoged {
-            self.delegate?.alertStateError(title: "voce adicionou o propio email", message: "Adicione um Email diferente")
+    func addContact(email: String, emailUsuarioLogado: String, idUsuario: String) {
+        
+        if email == emailUsuarioLogado { // Verificar se está tentando adicionar você mesmo.
+            self.delegate?.alertStateError(title: "Você adicionou seu próprio email.", message: "Adicione um email diferente.")
             return
         }
-        let firebase = Firestore.firestore()
-        firebase.collection("users").whereField("email", isEqualTo: email).getDocuments { query, error in
-            if let error = error {
-                print("Erro ao procurar")
-            }
-            if let totalItens = query?.count{
-                if totalItens == 0{
-                    self.delegate?.alertStateError(title: "Usuario não cadastrado", message: "Verifique o Email e tente novamente")
+        
+        // Verificar se existe o usuário no Firebase.
+        // Verificando a coleção "usuarios" criada no Firebase onde armazena os dados dos usuários.
+        let firestore = Firestore.firestore()
+        firestore.collection("users").whereField("email", isEqualTo: email).getDocuments { snapshotResultado, error in
+            
+            // Conta total de retorno - Quantidade de pessoas encontradas.
+            if let totalItens = snapshotResultado?.count {
+                // Se retornar 0, é porque não há usuário cadastrado.
+                print("TOTAL ITENS: \(totalItens)")
+                if totalItens == 0 {
+                    self.delegate?.alertStateError(title: "Nenhum usuario Cadastrado.", message: "Verifique o email e tente novamente.")
                     return
-
                 }
             }
-            if let snapshot = query{
-                for document in snapshot.documents{
-                    let dados = document.data()
+            // Salvar contato se passar pela Validação de cima.
+            if let snapshot = snapshotResultado {
+                for document in snapshot.documents {
+                    let dados = document.data() // Irá retornar um Array de Strings.
                     self.saveContact(dadosContact: dados, idUsuario: idUsuario)
                 }
             }

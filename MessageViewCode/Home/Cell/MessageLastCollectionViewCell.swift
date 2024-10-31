@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// MARK: Celula de adicionar contato
 class MessageLastCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "MessageLastCollectionViewCell"
     lazy var imageView: UIImageView = {
@@ -14,7 +14,7 @@ class MessageLastCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = false
-        imageView.image = UIImage(named: "person.badge.plus")
+        imageView.image = UIImage(systemName: "person.badge.plus")
         return imageView
     }()
     lazy var userName : UILabel = {
