@@ -9,12 +9,12 @@
 protocol ViewCode{
     func addSubviews() // adicionar outras views
     func setupConstraints() // define as constrants
-    func setupStyles() // definir fontes e cores
+   
 }
 extension ViewCode{
     func setup(){
         addSubviews()
         setupConstraints()
-        setupStyles()
+      
     }
 }
