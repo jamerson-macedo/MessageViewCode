@@ -16,11 +16,11 @@ struct Message{
 }
 class Conversation{
     var name : String?
-    var lasMesage: String?
+    var lastMesage: String?
     var idDestinatario:String?
     init(dict: [String: Any]){
         self.name = dict["nameUser"] as? String
-        self.lasMesage = dict["lastMessage"] as? String
+        self.lastMesage = dict["lastMessage"] as? String
         self.idDestinatario = dict["idDestinatario"] as? String
     }
 }

@@ -67,7 +67,7 @@ class MessageDetailCollectionViewCell: UICollectionViewCell {
         let atributedText = NSMutableAttributedString(string: "\(conversation.name ?? "")", attributes: [
             NSAttributedString.Key.font : UIFont(name: CustomFont.poppinsMedium, size: 16) ?? UIFont(),NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         // adiciona o campo de ultima mensagem quebrando a linha
-        atributedText.append(NSAttributedString(string: "\n\(conversation.lasMesage ?? "")", attributes: [NSAttributedString.Key.font : UIFont(name: CustomFont.poppinsMedium, size: 14) ?? UIFont(),NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+        atributedText.append(NSAttributedString(string: "\n\(conversation.lastMesage ?? "")", attributes: [NSAttributedString.Key.font : UIFont(name: CustomFont.poppinsMedium, size: 14) ?? UIFont(),NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
         self.userName.attributedText = atributedText
     }
 }
